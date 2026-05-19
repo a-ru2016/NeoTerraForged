@@ -214,6 +214,8 @@
   "reterraforged.gui.slider.noodleCaveProbability.tooltip": "Controls probability that a noodle cave will generate",
   "reterraforged.gui.slider.ravineProbability": "Ravine Carver Probability",
   "reterraforged.gui.slider.ravineProbability.tooltip": "Controls the probability that a ravine carver will generate",
+  "reterraforged.gui.slider.largeCavernProbability": "Large Cavern Chance",
+  "reterraforged.gui.slider.largeCavernProbability.tooltip": "Controls the probability that a large underground cavern will generate. When > 0, the deep cave carver is replaced with an enormous-radius carver (2.5-5x horizontal, 2-4x vertical) to create massive underground chambers.",
   "reterraforged.gui.slider.river.bankWidth": "Bank width",
   "reterraforged.gui.slider.river.bankWidth.tooltip": "Controls the river-banks width",
   "reterraforged.gui.slider.river.bedDepth": "Bed Depth",

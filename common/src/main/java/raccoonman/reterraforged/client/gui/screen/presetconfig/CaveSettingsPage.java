@@ -20,6 +20,7 @@ public class CaveSettingsPage extends PresetEditorPage {
 	private Slider carverCaveProbability;
 	private Slider deepCarverCaveProbability;
 	private Slider ravineProbability;
+	private Slider largeCavernProbability;
 	private CycleButton<Boolean> largeOreVeins;
 	private CycleButton<Boolean> legacyCarverDistribution;
 	
@@ -71,6 +72,10 @@ public class CaveSettingsPage extends PresetEditorPage {
 			caves.ravineCarverProbability = (float) slider.scaleValue(value);
 			return value;
 		});
+		this.largeCavernProbability = PresetWidgets.createFloatSlider(caves.largeCavernProbability, 0.0F, 1.0F, RTFTranslationKeys.GUI_SLIDER_LARGE_CAVERN_PROBABILITY, (slider, value) -> {
+			caves.largeCavernProbability = (float) slider.scaleValue(value);
+			return value;
+		});
 		this.largeOreVeins = PresetWidgets.createToggle(caves.largeOreVeins, RTFTranslationKeys.GUI_BUTTON_LARGE_ORE_VEINS, (button, value) -> {
 			caves.largeOreVeins = value;
 		});
@@ -89,6 +94,7 @@ public class CaveSettingsPage extends PresetEditorPage {
 		this.left.addWidget(this.carverCaveProbability);
 		this.left.addWidget(this.deepCarverCaveProbability);
 		this.left.addWidget(this.ravineProbability);
+		this.left.addWidget(this.largeCavernProbability);
 		this.left.addWidget(this.largeOreVeins);
 		this.left.addWidget(this.legacyCarverDistribution);
 	}

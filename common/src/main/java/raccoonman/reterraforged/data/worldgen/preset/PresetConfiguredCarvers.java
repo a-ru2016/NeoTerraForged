@@ -32,7 +32,20 @@ public class PresetConfiguredCarvers {
         HolderGetter<Block> blocks = ctx.lookup(Registries.BLOCK);
         
         ctx.register(Carvers.CAVE, WorldCarver.CAVE.configured(new CaveCarverConfiguration(caveSettings.caveCarverProbability, modifiedCaveY(caveSettings), modifiedCaveYScale(caveSettings), VerticalAnchor.aboveBottom(8), CarverDebugSettings.of(false, Blocks.CRIMSON_BUTTON.defaultBlockState()), blocks.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES), modifiedCaveHorizontalRadiusMultiplier(caveSettings), modifiedCaveVerticalRadiusMultiplier(caveSettings), modifiedCaveFloorLevel(caveSettings))));
-        ctx.register(Carvers.CAVE_EXTRA_UNDERGROUND, WorldCarver.CAVE.configured(new CaveCarverConfiguration(modifiedDeepCaveProbability(caveSettings), UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(47)), UniformFloat.of(0.1F, 0.9F), VerticalAnchor.aboveBottom(8), CarverDebugSettings.of(false, Blocks.OAK_BUTTON.defaultBlockState()), blocks.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES), UniformFloat.of(0.7F, 1.4F), UniformFloat.of(0.8F, 1.3F), UniformFloat.of(-1.0F, -0.4F))));
+        // 巨大地下空間カーバー: largeCavernProbability > 0 のとき超大型化、それ以外は通常サイズの深部洞窟
+        ctx.register(Carvers.CAVE_EXTRA_UNDERGROUND, WorldCarver.CAVE.configured(new CaveCarverConfiguration(
+            modifiedExtraCaveProbability(caveSettings),
+            // Y範囲: 地底からy=70までの広範囲
+            UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(70)),
+            // yScale: 非常に扉平な値にすることで横長の洞窟天井を広く生成
+            modifiedExtraCaveYScale(caveSettings),
+            VerticalAnchor.aboveBottom(8),
+            CarverDebugSettings.of(false, Blocks.OAK_BUTTON.defaultBlockState()),
+            blocks.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
+            modifiedExtraCaveHorizontalRadius(caveSettings),
+            modifiedExtraCaveVerticalRadius(caveSettings),
+            UniformFloat.of(-1.0F, -0.4F)
+        )));
         ctx.register(Carvers.CANYON, WorldCarver.CANYON.configured(new CanyonCarverConfiguration(caveSettings.ravineCarverProbability, modifiedRavineY(caveSettings), ConstantFloat.of(3.0F), VerticalAnchor.aboveBottom(8), CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), blocks.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES), modifiedRavineYScale(caveSettings), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.75F, 1.0F), TrapezoidFloat.of(0.0F, 6.0F, 2.0F), 3, UniformFloat.of(0.75F, 1.0F), 1.0F, 0.0F))));
 	}
 
@@ -58,6 +71,35 @@ public class PresetConfiguredCarvers {
 	
 	private static float modifiedDeepCaveProbability(CaveSettings caveSettings) {
 		return caveSettings.legacyCarverDistribution ? 0.0F : caveSettings.deepCaveCarverProbability;
+	}
+
+	/** largeCavernProbability>0 なら大型洞窟確率を使用、それ以外は従来の深部洞窟確率 */
+	private static float modifiedExtraCaveProbability(CaveSettings caveSettings) {
+		if (caveSettings.legacyCarverDistribution) return 0.0F;
+		return caveSettings.largeCavernProbability > 0.0F
+			? caveSettings.largeCavernProbability
+			: caveSettings.deepCaveCarverProbability;
+	}
+
+	/** largeCavernProbability>0 なら超平坦なyScale (0.05〜0.25) で巨大ドーム形状、それ以外は通常 */
+	private static FloatProvider modifiedExtraCaveYScale(CaveSettings caveSettings) {
+		return caveSettings.largeCavernProbability > 0.0F
+			? UniformFloat.of(0.05F, 0.25F)   // 非常に扉平: 横に広く残る
+			: UniformFloat.of(0.1F, 0.9F);
+	}
+
+	/** largeCavernProbability>0 なら巨大な水平半径 (8〜15倍)、それ以外は通常サイズ */
+	private static FloatProvider modifiedExtraCaveHorizontalRadius(CaveSettings caveSettings) {
+		return caveSettings.largeCavernProbability > 0.0F
+			? UniformFloat.of(8.0F, 15.0F)   // 通常の8〜15倍: 横幅極大
+			: UniformFloat.of(0.7F, 1.4F);
+	}
+
+	/** largeCavernProbability>0 なら巨大な垂直半径 (4〜8倍)、それ以外は通常サイズ */
+	private static FloatProvider modifiedExtraCaveVerticalRadius(CaveSettings caveSettings) {
+		return caveSettings.largeCavernProbability > 0.0F
+			? UniformFloat.of(4.0F, 8.0F)    // 通常の4〜8倍: 天井极高
+			: UniformFloat.of(0.8F, 1.3F);
 	}
 	
 	private static HeightProvider modifiedRavineY(CaveSettings caveSettings) {

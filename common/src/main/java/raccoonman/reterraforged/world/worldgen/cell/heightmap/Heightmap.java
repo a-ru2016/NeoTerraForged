@@ -123,7 +123,8 @@ public record Heightmap(CellPopulator terrain, CellPopulator region, Continent c
         CellPopulator mountains = Populators.makeMountainChain(mountainSeed, ground, terrainSettings.mountains, terrainSettings.general.legacyMountainScaling ? 1.0F : terrainSettings.mountains.horizontalScale * 2.25F, terrainSettings.general.legacyMountainScaling ? globalVerticalScale : globalVerticalScale * terrainSettings.mountains.verticalScale, general.fancyMountains, general.legacyMountainScaling);
         Continent continent = world.continent.continentType.create(ctx.seed, ctx);
         Climate climate = Climate.make(continent, ctx);
-        CellPopulator land = new Blender(mountainShape, terrainBlend, mountains, 0.3F, 0.8F, 0.575F);
+        // 山脈チェーンのブレンド開始点を下げて山岳地形の挑出領域を広げる
+        CellPopulator land = new Blender(mountainShape, terrainBlend, mountains, 0.25F, 0.8F, 0.575F);
         
         CellPopulator deepOcean = Populators.makeDeepOcean(ctx.seed.next(), levels.water);
         CellPopulator shallowOcean = Populators.makeShallowOcean(ctx.levels);

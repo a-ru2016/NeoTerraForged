@@ -78,7 +78,8 @@ public class TemplateFeature extends Feature<Config<?>> {
 	
 	        return false;
         } else {
-        	throw new IllegalStateException();
+        	// RTFMinecraftServer でないコンテキスト（ネザー等）ではスキップする
+        	return false;
         }
     }
 

@@ -101,35 +101,37 @@ public class Populators {
     }
 	
 	public static TerrainPopulator makePlateau(@Deprecated Seed seed, Noise ground, TerrainSettings.Terrain settings, float verticalScale) {
-		Noise valley = Noises.perlinRidge(seed.next(), 500, 1);
+		Noise valley = Noises.perlinRidge(seed.next(), 620, 2);
 		valley = Noises.invert(valley);
-		valley = Noises.warpPerlin(valley, seed.next(), 100, 1, 150.0F);
-		valley = Noises.warpPerlin(valley, seed.next(), 20, 1, 15.0F);
+		valley = Noises.warpPerlin(valley, seed.next(), 120, 1, 200.0F);
+		valley = Noises.warpPerlin(valley, seed.next(), 25, 1, 22.0F);
 		
-		Noise top = Noises.perlinRidge(seed.next(), 150, 3, 2.45F);
-		top = Noises.warpPerlin(top, seed.next(), 300, 1, 150.0F);
-		top = Noises.warpPerlin(top, seed.next(), 40, 2, 20.0F);
-		top = Noises.mul(top, 0.15F);
+		Noise top = Noises.perlinRidge(seed.next(), 180, 4, 2.55F);
+		top = Noises.warpPerlin(top, seed.next(), 380, 1, 200.0F);
+		top = Noises.warpPerlin(top, seed.next(), 50, 2, 28.0F);
+		top = Noises.mul(top, 0.18F);
 		
-		Noise valleyScaler = Noises.clamp(valley, 0.02F, 0.1F);
+		Noise valleyScaler = Noises.clamp(valley, 0.02F, 0.12F);
 		valleyScaler = Noises.map(valleyScaler, 0.0F, 1.0F);
 		
 		top = Noises.mul(top, valleyScaler);
 		
-		Noise surface = Noises.perlin(seed.next(), 20, 3);
-		surface = Noises.mul(surface, 0.05F);
-		surface = Noises.warpPerlin(surface, seed.next(), 40, 2, 20.0F);
+		Noise surface = Noises.perlin(seed.next(), 24, 3);
+		surface = Noises.mul(surface, 0.06F);
+		surface = Noises.warpPerlin(surface, seed.next(), 50, 2, 25.0F);
 		
-		Noise cubic = Noises.cubic(seed.next(), 500, 1);
-		cubic = Noises.mul(cubic, 0.6F);
+		Noise cubic = Noises.cubic(seed.next(), 620, 1);
+		cubic = Noises.mul(cubic, 0.65F);
 		cubic = Noises.add(cubic, 0.3F);
 		
 		Noise valleyBase = Noises.mul(valley, cubic);
 		valleyBase = Noises.add(valleyBase, top);
 		
-		Noise height = Noises.terrace(valleyBase, 0.9F, 0.15F, 0.35F, 0.4F, 4);
+		// テラスを5段に増やし、より迫力ある段丘地形に
+		Noise height = Noises.terrace(valleyBase, 0.9F, 0.15F, 0.35F, 0.4F, 5);
 		height = Noises.add(height, surface);
-		height = Noises.mul(height, 0.475F * verticalScale);
+		// 高原を約1.35倍高く
+		height = Noises.mul(height, 0.64F * verticalScale);
 		height = Noises.cache2d(height);
 		
 		Noise weirdness = Noises.clamp(valleyBase, 0.0F, 0.415F);
@@ -139,34 +141,36 @@ public class Populators {
 	}
 	
 	public static TerrainPopulator makeHills1(@Deprecated Seed seed, Noise ground, TerrainSettings.Terrain settings, float verticalScale) {
-		Noise height = Noises.perlin(seed.next(), 200, 3);
+		Noise height = Noises.perlin(seed.next(), 220, 4);
 		
-		Noise scaler = Noises.billow(seed.next(), 400, 3);
+		Noise scaler = Noises.billow(seed.next(), 480, 4);
 		scaler = Noises.alpha(scaler, 0.5F);
 		
 		height = Noises.mul(height, scaler);
-		height = Noises.warpPerlin(height, seed.next(), 30, 3, 20.0F);
-		height = Noises.warpPerlin(height, seed.next(), 400, 3, 200.0F);
-		height = Noises.mul(height, 0.6F * verticalScale);
+		height = Noises.warpPerlin(height, seed.next(), 40, 3, 30.0F);
+		height = Noises.warpPerlin(height, seed.next(), 500, 3, 280.0F);
+		// 丘を約1.3倍高く
+		height = Noises.mul(height, 0.78F * verticalScale);
 		height = Noises.cache2d(height);
 		return TerrainPopulator.make(TerrainType.HILLS, ground, height, DEFAULT_EROSION, DEFAULT_WEIRDNESS, settings);
 	}
 
 	public static TerrainPopulator makeHills2(@Deprecated Seed seed, Noise ground, TerrainSettings.Terrain settings, float verticalScale) {
-		Noise height = Noises.cubic(seed.next(), 128, 2);
+		Noise height = Noises.cubic(seed.next(), 160, 3);
 
-		Noise scaler1 = Noises.perlin(seed.next(), 32, 4);
-		scaler1 = Noises.alpha(scaler1, 0.075F);
+		Noise scaler1 = Noises.perlin(seed.next(), 40, 4);
+		scaler1 = Noises.alpha(scaler1, 0.085F);
 		height = Noises.mul(height, scaler1);
 		
-		height = Noises.warpPerlin(height, seed.next(), 30, 3, 20.0F);
-		height = Noises.warpPerlin(height, seed.next(), 400, 3, 200.0F);
+		height = Noises.warpPerlin(height, seed.next(), 40, 3, 30.0F);
+		height = Noises.warpPerlin(height, seed.next(), 500, 3, 280.0F);
 
-		Noise scaler2 = Noises.perlinRidge(seed.next(), 512, 2);
+		Noise scaler2 = Noises.perlinRidge(seed.next(), 640, 3);
 		scaler2 = Noises.alpha(scaler2, 0.8F);
 		height = Noises.mul(height, scaler2);
 		
-		height = Noises.mul(height, 0.55F * verticalScale);
+		// 丘を約1.3倍高く
+		height = Noises.mul(height, 0.72F * verticalScale);
 		height = Noises.cache2d(height);
 		return TerrainPopulator.make(TerrainType.HILLS, ground, height, DEFAULT_EROSION, DEFAULT_WEIRDNESS, settings);
 	}
@@ -274,10 +278,15 @@ public class Populators {
 		return TerrainPopulator.make(TerrainType.HILLS, ground, height, Erosion.LEVEL_5.source(), weirdness, settings);
 	}
 
-    private static final int MOUNTAINS_H = 610;
-    private static final float MOUNTAINS_V = 1.3F;
-    private static final int MOUNTAINS3_H = 600;
-    private static final float MOUNTAINS3_V = 1.185F;
+    // === 雄大な地形設定 ===
+    // 山岳の水平スケール（大きいほど山が広大になる）
+    private static final int MOUNTAINS_H = 760;
+    // 山岳の垂直スケール（大きいほど山が高くなる）
+    private static final float MOUNTAINS_V = 1.85F;
+    // 山岳タイプ3の水平スケール
+    private static final int MOUNTAINS3_H = 750;
+    // 山岳タイプ3の垂直スケール
+    private static final float MOUNTAINS3_V = 1.65F;
 	private static TerrainPopulator makeMountains(Terrain terrainType, @Deprecated Seed seed, Noise ground, TerrainSettings.Terrain settings, float horizontalScale, float verticalScale, boolean makeFancy, boolean legacyScaling) {
 		int scaleH = legacyScaling ? Math.round(410.0F * settings.horizontalScale) : Math.round(MOUNTAINS_H * settings.horizontalScale);
 
@@ -362,10 +371,11 @@ public class Populators {
     
 	public static Noise makeFancy(@Deprecated Seed seed, Noise input) {
 		Domain domain = Domains.direction(
-			Noises.perlin(seed.next(), 10, 1),
-			Noises.constant(2.0F)
+			Noises.perlin(seed.next(), 12, 2),
+			Noises.constant(3.5F)
 		);
-		Noise erosion = Noises.erosion(input, seed.next(), 2, 0.65F, 128.0F, 0.15F, 3.1F, 0.8F, BlendMode.CONSTANT);
+		// 侵食の強度を上げ、より険しい山稜を生成
+		Noise erosion = Noises.erosion(input, seed.next(), 3, 0.70F, 180.0F, 0.18F, 3.6F, 0.85F, BlendMode.CONSTANT);
 		erosion = Noises.warp(erosion, domain);
 		return erosion;
 	}

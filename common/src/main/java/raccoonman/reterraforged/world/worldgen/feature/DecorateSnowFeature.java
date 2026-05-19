@@ -117,7 +117,8 @@ public class DecorateSnowFeature extends Feature<Config> {
 			}
 	        return true;
 		} else {
-			throw new IllegalStateException();
+			// RTFRandomState が存在しないディメンション（ネザー等）ではスキップする
+			return false;
 		}
 	}
 

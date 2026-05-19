@@ -21,12 +21,12 @@ public class Presets {
 	public static Preset makeRTFDefault() {
 		return new Preset(
 			new WorldSettings(
-				new Continent(ContinentType.MULTI_IMPROVED, DistanceFunction.EUCLIDEAN, 3000, 0.7F, 0.25F, 0.25F, 5, 0.26F, 4.33F),
+				new Continent(ContinentType.MULTI_IMPROVED, DistanceFunction.EUCLIDEAN, 4000, 0.7F, 0.25F, 0.25F, 5, 0.26F, 4.33F),
 				new ControlPoints(IslandPopulator.DEFAULT_INLAND_POINT, IslandPopulator.DEFAULT_COAST_POINT, 0.1F, 0.25F, 0.327F, 0.448F, 0.502F), 
 				new Properties(SpawnType.CONTINENT_CENTER, 384, 64, 63, -54)
 			), 
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 256, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.05F, 0.07F, 0.0075F, true, false),
+			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.05F, 0.07F, 0.03F, true, false, 0.1F),
 			new ClimateSettings(
 				new RangeValue(0, 6, 2, 0.0F, 0.98F, 0.05F), 
 				new RangeValue(0, 6, 1, 0.0F, 1.0F, 0.0F), 
@@ -34,16 +34,26 @@ public class Presets {
 				new BiomeNoise(ClimateSettings.BiomeNoise.EdgeType.SIMPLEX, 24, 2, 0.5F, 2.65F, 14)
 			), 
 			new TerrainSettings(
-				new General(0, 1200, 0.96F, 1.0F, true, false),
-				new Terrain(1.0F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.0F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.0F, 1.0F, 1.0F, 1.0F),
+				// globalVerticalScale: 山の高さの全体倍率を上げてより壮大に
+				new General(0, 1200, 1.35F, 1.0F, true, false),
+				// steppe (ステップ): weight下げて平坦地を減らす
+				new Terrain(0.5F, 1.0F, 1.0F, 1.0F), 
+				// plains (平原): 少し抑える
+				new Terrain(1.2F, 1.0F, 1.0F, 1.0F), 
+				// hills (丘): より起伏を持たせる
+				new Terrain(2.8F, 1.0F, 1.3F, 1.0F),
+				// dales (谷間の丘): そのまま
 				new Terrain(1.5F, 1.0F, 1.0F, 1.0F),
-				new Terrain(1.5F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(1.0F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.0F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.5F, 1.0F, 1.0F, 1.0F),
-				new Terrain(5.0F, 1.0F, 1.0F, 1.0F)
+				// plateau (高原): weight増やし、垂直スケールさらに強化
+				new Terrain(2.5F, 1.0F, 1.5F, 1.0F), 
+				// badlands (荒地): 少し垂直方向へ伸ばす
+				new Terrain(1.0F, 1.0F, 1.1F, 1.0F), 
+				// torridonian: weightとスケールを増やす
+				new Terrain(2.8F, 1.0F, 1.2F, 1.0F), 
+				// mountains (山岳): 圧倒的な高さと存在感
+				new Terrain(4.5F, 1.0F, 1.8F, 1.0F),
+				// volcano (火山): さらなる威圧感
+				new Terrain(6.0F, 1.0F, 1.5F, 1.0F)
 			), 
 			new RiverSettings(
 				0, 8, 
@@ -69,7 +79,7 @@ public class Presets {
 				new Properties(SpawnType.CONTINENT_CENTER, 320, 64, 63, -54)
 			), 
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 140, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, true, false),
+			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, true, false, 0.02F),
 			new ClimateSettings(
 				new RangeValue(0, 6, 2, 0.0F, 0.98F, 0.05F), 
 				new RangeValue(0, 6, 1, 0.0F, 1.0F, 0.0F), 
@@ -112,7 +122,7 @@ public class Presets {
 				new Properties(SpawnType.WORLD_ORIGIN, 320, 64, 63, -54)
 			), 
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 140, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(1.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.15F, 0.07F, 0.021F, true, false),
+			new CaveSettings(1.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.15F, 0.07F, 0.021F, true, false, 0.02F),
 			new ClimateSettings(
 				new RangeValue(0, 4, 1, 0.0F, 0.98F, 0.05F), 
 				new RangeValue(0, 5, 1, 0.0F, 1.0F, 0.0F), 
@@ -151,12 +161,12 @@ public class Presets {
 	public static Preset makeLegacyBeautiful() {
 		return new Preset(
 			new WorldSettings(
-				new Continent(ContinentType.MULTI, DistanceFunction.EUCLIDEAN, 3000, 0.8F, 0.25F, 0.25F, 5, 0.26F, 4.33F),
+				new Continent(ContinentType.MULTI, DistanceFunction.EUCLIDEAN, 4000, 0.8F, 0.25F, 0.25F, 5, 0.26F, 4.33F),
 				new ControlPoints(IslandPopulator.DEFAULT_INLAND_POINT, IslandPopulator.DEFAULT_COAST_POINT, 0.1F, 0.25F, 0.326F, 0.448F, 0.5F), 
-				new Properties(SpawnType.CONTINENT_CENTER, 320, 64, 63, -54)
+				new Properties(SpawnType.CONTINENT_CENTER, 384, 64, 63, -54)
 			), 
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 140, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, true, false),
+			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.04F, true, false, 0.1F),
 			new ClimateSettings(
 				new RangeValue(0, 7, 1, 0.0F, 1.0F, -0.004F), 
 				new RangeValue(0, 6, 1, 0.0F, 1.0F, 0.0F), 
@@ -164,16 +174,16 @@ public class Presets {
 				new BiomeNoise(ClimateSettings.BiomeNoise.EdgeType.SIMPLEX, 24, 2, 0.5F, 2.65F, 14)
 			), 
 			new TerrainSettings(
-				new General(0, 1356, 1.0F, 1.175F, true, true),
+				new General(0, 1356, 1.25F, 1.175F, true, true),
 				new Terrain(1.519F, 1.0F, 1.0F, 1.0F), 
 				new Terrain(2.164F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.706F, 1.0F, 1.0F, 1.0F),
+				new Terrain(2.706F, 1.0F, 1.2F, 1.0F),
 				new Terrain(1.184F, 1.0F, 1.0F, 1.0F),
-				new Terrain(2.576F, 1.0F, 1.0F, 1.0F), 
+				new Terrain(2.576F, 1.0F, 1.3F, 1.0F), 
 				new Terrain(1.493F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(3.555F, 1.0F, 1.0F, 1.0F), 
-				new Terrain(2.911F, 1.0F, 1.0F, 1.0F),
-				new Terrain(7.5F, 1.0F, 1.0F, 1.0F)
+				new Terrain(3.555F, 1.0F, 1.1F, 1.0F), 
+				new Terrain(4.5F, 1.0F, 1.6F, 1.0F),
+				new Terrain(7.5F, 1.0F, 1.3F, 1.0F)
 			), 
 			new RiverSettings(
 				0, 14, 
@@ -199,7 +209,7 @@ public class Presets {
 				new Properties(SpawnType.CONTINENT_CENTER, 320, 64, 63, -54)
 			),
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 140, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, false, false),
+			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, false, false, 0.02F),
 			new ClimateSettings(
 				new RangeValue(0, 4, 1, 0.0F, 0.98F, 0.05F),
 				new RangeValue(0, 5, 1, 0.0F, 1.0F, 0.0F), 
@@ -242,7 +252,7 @@ public class Presets {
 				new Properties(SpawnType.CONTINENT_CENTER, 320, 64, 63, -54)
 			), 
 			new SurfaceSettings(new SurfaceSettings.Erosion(30, 140, 40, 95, 0.65F, 0.475F, 0.4F)),
-			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, true, false),
+			new CaveSettings(0.0F, 1.5625F, 1.0F, 1.0F, 1.0F, 0.14285715F, 0.07F, 0.02F, true, false, 0.02F),
 			new ClimateSettings(
 				new RangeValue(0, 4, 2, 0.0F, 1.0F, 0.097F), 
 				new RangeValue(0, 3, 1, 0.0F, 1.0F, 0.0F), 
