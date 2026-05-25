@@ -15,7 +15,8 @@ public class CaveSettings {
 		Codec.FLOAT.fieldOf("ravineCarverProbability").forGetter((o) -> o.ravineCarverProbability),
 		Codec.BOOL.fieldOf("largeOreVeins").forGetter((o) -> o.largeOreVeins),
 		Codec.BOOL.fieldOf("legacyCarverDistribution").forGetter((o) -> o.legacyCarverDistribution),
-		Codec.FLOAT.optionalFieldOf("largeCavernProbability", 0.03F).forGetter((o) -> o.largeCavernProbability)
+		Codec.FLOAT.optionalFieldOf("largeCavernProbability", 0.03F).forGetter((o) -> o.largeCavernProbability),
+		Codec.BOOL.optionalFieldOf("massiveCaveSurfaceBreakthrough", true).forGetter((o) -> o.massiveCaveSurfaceBreakthrough)
 	).apply(instance, CaveSettings::new));
 
 	public float entranceCaveProbability;
@@ -30,11 +31,13 @@ public class CaveSettings {
 	public boolean legacyCarverDistribution;
 	/** 巨大地下空間カーバーの出現確率 (0.0 = 無効, 1.0 = 必ず出現) */
 	public float largeCavernProbability;
+	/** 巨大洞窟が地上に露出（突き抜ける）することを許可するかどうか */
+	public boolean massiveCaveSurfaceBreakthrough;
 	
 	//TODO
 	public boolean minCaveBiomeDepth;
 
-	public CaveSettings(float entranceCaveProbability, float cheeseCaveDepthOffset, float cheeseCaveProbability, float spaghettiCaveProbability, float noodleCaveProbability, float caveCarverProbability, float deepCaveCarverProbability, float ravineProbability, boolean largeOreVeins, boolean legacyCarverDistribution, float largeCavernProbability) {
+	public CaveSettings(float entranceCaveProbability, float cheeseCaveDepthOffset, float cheeseCaveProbability, float spaghettiCaveProbability, float noodleCaveProbability, float caveCarverProbability, float deepCaveCarverProbability, float ravineProbability, boolean largeOreVeins, boolean legacyCarverDistribution, float largeCavernProbability, boolean massiveCaveSurfaceBreakthrough) {
 		this.entranceCaveProbability = entranceCaveProbability;
 		this.cheeseCaveDepthOffset = cheeseCaveDepthOffset;
 		this.cheeseCaveProbability = cheeseCaveProbability;
@@ -46,9 +49,10 @@ public class CaveSettings {
 		this.largeOreVeins = largeOreVeins;
 		this.legacyCarverDistribution = legacyCarverDistribution;
 		this.largeCavernProbability = largeCavernProbability;
+		this.massiveCaveSurfaceBreakthrough = massiveCaveSurfaceBreakthrough;
 	}
 	
 	public CaveSettings copy() {
-		return new CaveSettings(this.entranceCaveProbability, this.cheeseCaveDepthOffset, this.cheeseCaveProbability, this.spaghettiCaveProbability, this.noodleCaveProbability, this.caveCarverProbability, this.deepCaveCarverProbability, this.ravineCarverProbability, this.largeOreVeins, this.legacyCarverDistribution, this.largeCavernProbability);
+		return new CaveSettings(this.entranceCaveProbability, this.cheeseCaveDepthOffset, this.cheeseCaveProbability, this.spaghettiCaveProbability, this.noodleCaveProbability, this.caveCarverProbability, this.deepCaveCarverProbability, this.ravineCarverProbability, this.largeOreVeins, this.legacyCarverDistribution, this.largeCavernProbability, this.massiveCaveSurfaceBreakthrough);
 	}
 }

@@ -35,8 +35,8 @@ public class PresetConfiguredCarvers {
         // 巨大地下空間カーバー: largeCavernProbability > 0 のとき超大型化、それ以外は通常サイズの深部洞窟
         ctx.register(Carvers.CAVE_EXTRA_UNDERGROUND, WorldCarver.CAVE.configured(new CaveCarverConfiguration(
             modifiedExtraCaveProbability(caveSettings),
-            // Y範囲: 地底からy=70までの広範囲
-            UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(70)),
+            // Y範囲: massiveCaveSurfaceBreakthroughがfalseなら地上に突き抜けない高度(Y=32まで)に制限
+            UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(caveSettings.massiveCaveSurfaceBreakthrough ? 70 : 32)),
             // yScale: 非常に扉平な値にすることで横長の洞窟天井を広く生成
             modifiedExtraCaveYScale(caveSettings),
             VerticalAnchor.aboveBottom(8),

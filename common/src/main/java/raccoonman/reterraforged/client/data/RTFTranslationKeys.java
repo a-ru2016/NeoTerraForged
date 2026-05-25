@@ -97,6 +97,7 @@ public final class RTFTranslationKeys {
 	public static final String GUI_SLIDER_DEEP_CAVE_CARVER_PROBABILITY = resolve("gui.slider.deepCarverCaveProbability");
 	public static final String GUI_SLIDER_RAVINE_CARVER_PROBABILITY = resolve("gui.slider.ravineProbability");
 	public static final String GUI_SLIDER_LARGE_CAVERN_PROBABILITY = resolve("gui.slider.largeCavernProbability");
+	public static final String GUI_BUTTON_MASSIVE_CAVE_SURFACE_BREAKTHROUGH = resolve("gui.button.massiveCaveSurfaceBreakthrough");
 	public static final String GUI_SLIDER_TEMPERATURE_SCALE = resolve("gui.slider.temperatureScale");
 	public static final String GUI_SLIDER_TEMPERATURE_FALLOFF = resolve("gui.slider.temperatureFalloff");
 	public static final String GUI_SLIDER_TEMPERATURE_MIN = resolve("gui.slider.temperatureMin");
